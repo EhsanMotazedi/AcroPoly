@@ -5,7 +5,7 @@
 # This wrapper extracts the desired contig from the bam and VCF files and runs AcroPoly with the passed input options.
 # This script should be stored in the same folder as AcroPoly.py.
 # Written by Ehsan Motazedi, Wageningen University & Research, 10-08-2018.
-# Last modified: 22-08-2018 
+# Last modified: 05-06-2022 
 
 use strict;
 use warnings;
@@ -19,7 +19,7 @@ sub signal_handler{
 
 my @PATH = split /\//, abs_path($0);
 my $AcroPoly_Path = join '/', @PATH[0..$#PATH-1];
-my $hlp_msg = "\nA simple perl wrapper for AcroPoly, so that the contig name and the maximum genotype missing rate\nof each SNP can be specified for haplotyping. Useful when multiple contigs are present in the BAM\nand VCF files, which are not handled directly by AcroPoly. Also, useful to exclude SNPs from phasings\nbased upon their genotype missing rate in the VCF file.\n\nThis wrapper extracts the desired contig from the bam and VCF files, breaks complex variants and \nexcludes indels, performs SNP filtering and runs AcroPoly with the passed input options. To run this\nscript it should be stored in the same folder as AcroPoly.py.\n\nInput parameters:\n\n\tparameters passed to AcroPoly (see ./AcroPoly.py -h)\n\n\t-h, --help\tprint this help message and exit.\n\t-c, --contig\tname of the contig to be phased.\n\t--maxMISS\tmaximum tolerable genotype missing rate for each SNP to be included in phasing.\n\nWritten by Ehsan Motazedi, Wageningen University & Research, 10-08-2018.";
+my $hlp_msg = "\nA simple perl wrapper for AcroPoly, so that the contig name and the maximum genotype missing rate\nof each SNP can be specified for haplotyping. Useful when multiple contigs are present in the BAM\nand VCF files, which are not handled directly by AcroPoly. Also, useful to exclude SNPs from phasings,\nbased upon their genotype missing rate in the VCF file.\n\nThis wrapper extracts the desired contig from the bam and VCF files, breaks complex variants and \nexcludes indels, performs SNP filtering and runs AcroPoly with the passed input options. To run this\nscript it should be stored in the same folder as AcroPoly.py.\n\nInput parameters:\n\n\tparameters passed to AcroPoly (see ./AcroPoly.py -h)\n\n\t-h, --help\tprint this help message and exit.\n\t-c, --contig\tname of the contig to be phased.\n\t--maxMISS\tmaximum tolerable genotype missing rate for each SNP to be included in phasing.\n\n\tObligatory arguments to be given in order:\n\n\tBAM file name\n\tVCF file name\n\nWritten by Ehsan Motazedi, Wageningen University & Research, 10-08-2018.";
 
 $SIG{INT}  = \&signal_handler;
 $SIG{TERM} = \&signal_handler;
@@ -66,7 +66,7 @@ if ($#ARGV == -1){ # check correct number of positional arguments
 	die "ERROR: No bam file and VCF file is given!\n"
 } elsif ($#ARGV < 1){
 	die "ERROR: No VCF file is given!\n"
-} elsif ($#ARGV > 2){
+} elsif ($#ARGV > 1){
 	die "ERROR: Too many positional arguments given!\n"
 }
 
